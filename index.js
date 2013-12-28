@@ -4,7 +4,11 @@ var Base = require('ribcage-view')
 
 var TopBar = Base.extend({
 
-  template: function () {
+  afterInit: function (opts) {
+    this.options = opts
+  }
+
+, template: function () {
     return ''+
       '<div class="left-button-target"></div>'+
       '<div class="title hidden"></div>'+
