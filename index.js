@@ -66,7 +66,11 @@ var TopBar = Base.extend({
 
 , setLeftButton: function (btn) {
 
-    if (this.leftButton) this.leftButton.close()
+    if (this.leftButton)  {
+      this.detachSubview(this.leftButton)
+      this.leftButton.close()
+      delete this.leftButton
+    }
 
     this.leftButton = this.getButton(btn)
     this.leftButton.$el.addClass('left')
@@ -76,7 +80,11 @@ var TopBar = Base.extend({
 
 , setRightButton: function (btn) {
 
-    if (this.rightButton) this.rightButton.close()
+    if (this.rightButton)  {
+      this.detachSubview(this.rightButton)
+      this.rightButton.close()
+      delete this.rightButton
+    }
 
     if (!btn) return
 
@@ -90,7 +98,13 @@ var TopBar = Base.extend({
 
     if (!params) params = {}
 
-    if (this.menu) this.menu.close()
+    if (this.menu)  {
+      this.detachSubview(this.menu)
+      this.menu.close()
+      delete this.menu
+    }
+
+    if(!menu) return
 
     this.menu = new Menu(opts)
     this.appendSubview(this.menu, this.$('.menu-target'))
@@ -111,10 +125,25 @@ var TopBar = Base.extend({
 , setTitle: function (title, params) {
     if (!params) params = {}
 
-    if(typeof title == 'string')
+    if(this.title) {
+      this.detachSubview(this.title)
+      this.title.close()
+      delete this.title
+    }
+
+    if(!title) {
+      this.$('.title').empty()
+      return
+    }
+
+    if(typeof title == 'string') {
       this.$('.title').html(title)
-    else
-      this.appendSubview(title, this.$('.title'));
+    }
+    else {
+      this.$('.title').empty()
+      this.title = title
+      this.appendSubview(title, this.$('.title'))
+    }
 
     if (params.show) this.showTitle()
   }
