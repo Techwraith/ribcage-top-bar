@@ -30,6 +30,7 @@
   "dependencies": {
     "ribcage-view": "~0.0.11",
     "ribcage-button": "~0.0.1",
+    "ribcage-back-button": "~0.0.1",
     "ribcage-menu": "~0.0.1"
   },
   "readme": "ribcage-top-bar\n===============\n\nA fixed top bar for your app. Use in modals or as a direct child of the body element.\n",

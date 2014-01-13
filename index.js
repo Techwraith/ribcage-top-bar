@@ -8,12 +8,31 @@ var TopBar = Base.extend({
     this.options = opts
   }
 
+, events: {
+    'click .left-button-target': 'propagateLeft'
+  , 'click .right-button-target': 'propagateRight'
+  }
+
 , template: function () {
     return ''+
       '<div class="left-button-target"></div>'+
-      '<div class="title hidden"></div>'+
+      '<div class="title"></div>'+
       '<div class="menu-target"></div>'+
       '<div class="right-button-target"></div>'
+  }
+
+, propagateLeft: function (e) {
+    if(this.leftButton && e.target.classList.contains('left-button-target')) {
+      e.stopPropagation()
+      this.leftButton.$el.triggerHandler('click')
+    }
+  }
+
+, propagateRight: function (e) {
+    if(this.rightButton && e.target.classList.contains('right-button-target')) {
+      e.stopPropagation()
+      this.rightButton.$el.triggerHandler('click')
+    }
   }
 
 , className: 'top-bar'
@@ -42,10 +61,7 @@ var TopBar = Base.extend({
       return opts
     }
 
-    var self = this
-      , button = new Button(opts);
-
-    return button;
+    return new Button(opts)
   }
 
 , setLeftButton: function (btn) {
@@ -89,6 +105,7 @@ var TopBar = Base.extend({
 
 , showMenu: function () {
     this.$('.menu-target').show()
+    this.$('.title').hide()
   }
 
 , setTitle: function (title, params) {
@@ -108,6 +125,7 @@ var TopBar = Base.extend({
 
 , showTitle: function () {
     this.$('.title').show()
+    this.$('.menu-target').hide()
   }
 
 , activateMenuItem: function (route) {
