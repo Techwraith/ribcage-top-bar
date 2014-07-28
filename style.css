@@ -18,7 +18,7 @@
   flex: 1 1 auto;
 }
 
-.top-bar .title {
+.top-bar-title {
   -webkit-flex: 1 1 auto;
   -moz-flex: 1 1 auto;
   flex: 1 1 auto;
@@ -77,6 +77,12 @@
   color: #bababa;
 }
 
+/*TODO import utility class*/
+.hidden {
+  display: none !important;
+  visibility: hidden;
+}
+
 @media (min-width: 768px) {
   .top-bar .menu-bar {
     max-width: 300px;
@@ -94,3 +100,4 @@
     color: #bababa;
   }
 }
+

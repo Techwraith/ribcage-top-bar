@@ -16,7 +16,7 @@ var TopBar = Base.extend({
 , template: function () {
     return ''+
       '<div class="left-button-target"></div>'+
-      '<div class="title"></div>'+
+      '<div class="top-bar-title"></div>'+
       '<div class="menu-target"></div>'+
       '<div class="right-button-target"></div>'
   }
@@ -106,32 +106,30 @@ var TopBar = Base.extend({
   }
 
 , hideMenu: function () {
-    this.$('.menu-target').hide()
+    this.$('.menu-target').toggleClass('hidden', true)
   }
 
 , showMenu: function () {
-    this.$('.menu-target').show()
-    this.$('.title').hide()
+    this.$('.menu-target').toggleClass('hidden', false)
   }
 
 , setTitle: function (title, params) {
     if (!params) params = {}
 
     if(typeof title == 'string')
-      this.$('.title').html(title)
+      this.$('.top-bar-title').html(title)
     else
-      this.appendSubview(title, this.$('.title'));
+      this.appendSubview(title, this.$('.top-bar-title'));
 
     if (params.show) this.showTitle()
   }
 
 , hideTitle: function () {
-    this.$('.title').hide()
+    this.$('.top-bar-title').toggleClass('hidden', true)
   }
 
 , showTitle: function () {
-    this.$('.title').show()
-    this.$('.menu-target').hide()
+    this.$('.top-bar-title').toggleClass('hidden', false)
   }
 
 , activateMenuItem: function (route) {
