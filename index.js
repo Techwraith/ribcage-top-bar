@@ -61,6 +61,12 @@ var TopBar = Base.extend({
       return opts
     }
 
+    if (typeof opts == 'string') {
+      return new Base({
+        template: function() { return opts }
+      })
+    }
+
     return new Button(opts)
   }
 
