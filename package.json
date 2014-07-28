@@ -28,12 +28,11 @@
   "gitHead": "fdfeeb02517fff4a82f22c061dd41291e701a535",
   "readmeFilename": "README.md",
   "dependencies": {
-    "ribcage-view": "~0.0.11",
-    "ribcage-button": "~0.0.1",
-    "ribcage-back-button": "~0.0.1",
-    "ribcage-menu": "~0.0.1"
+    "ribcage-view": "^0.0.21",
+    "ribcage-button": "^0.0.2",
+    "ribcage-back-button": "^0.0.2",
+    "ribcage-menu": "^0.0.1"
   },
-  "readme": "ribcage-top-bar\n===============\n\nA fixed top bar for your app. Use in modals or as a direct child of the body element.\n",
   "_id": "ribcage-top-bar@0.0.3",
   "_from": "ribcage-top-bar@latest"
 }
