@@ -1,6 +1,6 @@
 {
   "name": "ribcage-top-bar",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A fixed top bar for your app. Use in modals or as a direct child of the body element.",
   "main": "index.js",
   "style": "style.css",
