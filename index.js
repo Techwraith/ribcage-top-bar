@@ -71,38 +71,45 @@ var TopBar = Base.extend({
   }
 
 , setLeftButton: function (btn) {
+    var holder = this.$('.left-button-target')
 
-    if (this.leftButton) this.leftButton.close()
+    if (this.leftButton) this.leftButton.close({keepDom: false})
 
-    this.leftButton = this.getButton(btn)
-    this.leftButton.$el.addClass('left')
-    this.appendSubview(this.leftButton, this.$('.left-button-target'))
-
+    window.requestAnimationFrame(function (){
+      holder.empty()
+      this.leftButton = this.getButton(btn)
+      this.leftButton.$el.addClass('left')
+      this.appendSubview(this.leftButton, holder)
+    }.bind(this))
   }
 
 , setRightButton: function (btn) {
+    var holder = this.$('.right-button-target')
 
-    if (this.rightButton) this.rightButton.close()
+    if (this.rightButton) this.rightButton.close({keepDom: false})
 
     if (!btn) return
 
-    this.rightButton = this.getButton(btn)
-    this.rightButton.$el.addClass('right')
-    this.appendSubview(this.rightButton, this.$('.right-button-target'))
-
+    window.requestAnimationFrame(function (){
+      holder.empty()
+      this.rightButton = this.getButton(btn)
+      this.rightButton.$el.addClass('right')
+      this.appendSubview(this.rightButton, holder)
+    }.bind(this))
   }
 
 , setMenu: function (opts, params) {
 
     if (!params) params = {}
 
-    if (this.menu) this.menu.close()
+    if (this.menu) this.menu.close({keepDom: false})
 
-    this.menu = new Menu(opts)
-    this.appendSubview(this.menu, this.$('.menu-target'))
+    window.requestAnimationFrame(function (){
+      this.menu = new Menu(opts)
+      this.appendSubview(this.menu, this.$('.menu-target'))
 
-    if (params.show) this.showMenu()
-
+      if (params.show) this.showMenu()
+    }.bind(this))
   }
 
 , hideMenu: function () {
@@ -133,10 +140,12 @@ var TopBar = Base.extend({
   }
 
 , activateMenuItem: function (route) {
-    this.menu.$('.active').removeClass('active')
-    this.menu.eachSubview(function (view) {
-      if (view.options.route == route) view.$el.addClass('active')
-    })
+    window.requestAnimationFrame(function (){
+      this.menu.$('.active').removeClass('active')
+      this.menu.eachSubview(function (view) {
+        if (view.options.route === route) view.$el.addClass('active')
+      })
+    }.bind(this))
   }
 
 })
