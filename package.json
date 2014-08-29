@@ -28,10 +28,11 @@
   "gitHead": "fdfeeb02517fff4a82f22c061dd41291e701a535",
   "readmeFilename": "README.md",
   "dependencies": {
-    "ribcage-view": "^2.1.0",
-    "ribcage-button": "^0.0.2",
+    "lodash": "^2.4.1",
     "ribcage-back-button": "^0.0.2",
-    "ribcage-menu": "^0.0.1"
+    "ribcage-button": "^0.0.2",
+    "ribcage-menu": "^0.0.1",
+    "ribcage-view": "^2.1.0"
   },
   "_id": "ribcage-top-bar@0.0.3",
   "_from": "ribcage-top-bar@latest"
