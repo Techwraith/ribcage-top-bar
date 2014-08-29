@@ -1,6 +1,8 @@
+'use strict';
 var Base = require('ribcage-view')
   , Button = require('ribcage-button')
   , Menu = require('ribcage-menu')
+  , _ = require('lodash')
 
 var TopBar = Base.extend({
 
@@ -49,16 +51,18 @@ var TopBar = Base.extend({
 
 , getButton: function (opts) {
 
-    // someone may have passed in an already built button
-    // if so, just append it now
-    if (typeof opts.render == 'function') {
-      return opts
-    }
+    if (opts){
+      // someone may have passed in an already built button
+      // if so, just append it now
+      if (typeof opts.render === 'function') {
+        return opts
+      }
 
-    if (typeof opts == 'string') {
-      return new Base({
-        template: function() { return opts }
-      })
+      if (typeof opts === 'string') {
+        return new Base({
+          template: function() { return opts }
+        })
+      }
     }
 
     return new Button(opts)
@@ -66,30 +70,25 @@ var TopBar = Base.extend({
 
 , setLeftButton: function (btn) {
     var holder = this.$('.left-button-target')
+      , store = 'leftButton'
 
-    if (this.leftButton) this.leftButton.close({keepDom: false})
-
-    window.requestAnimationFrame(function (){
-      holder.empty()
-      this.leftButton = this.getButton(btn)
-      this.leftButton.$el.addClass('left')
-      this.appendSubview(this.leftButton, holder)
-    }.bind(this))
+    if (this.leftButton) this.leftButton.close(null, _.bind(this.addButton, this, holder, btn, store))
+    else this.addButton(holder, btn, store)
   }
 
 , setRightButton: function (btn) {
     var holder = this.$('.right-button-target')
+      , store = 'rightButton'
 
-    if (this.rightButton) this.rightButton.close({keepDom: false})
+    if (this.rightButton) this.rightButton.close(null, _.bind(this.addButton, this, holder, btn, store))
+    else this.addButton(holder, btn, store)
+  }
 
-    if (!btn) return
-
-    window.requestAnimationFrame(function (){
-      holder.empty()
-      this.rightButton = this.getButton(btn)
-      this.rightButton.$el.addClass('right')
-      this.appendSubview(this.rightButton, holder)
-    }.bind(this))
+, addButton: function addButton(holder, btn, store){
+    holder.empty()
+    this[store] = this.getButton(btn)
+    this[store].$el.addClass('right')
+    this.appendSubview(this[store], holder)
   }
 
 , setMenu: function (opts, params) {
