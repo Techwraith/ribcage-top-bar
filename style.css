@@ -41,15 +41,23 @@
 .top-bar .menu-bar .btn-bar {
   display: table-cell;
   text-align: center;
+  border: none;
   border-left: 1px solid #000;
   padding-top: 10px;
   padding-bottom: 8px;
   width: 1%;
   cursor: pointer;
+  background-color: transparent;
+  box-shadow: none;
 }
 
 .top-bar .menu-bar .btn-bar:first-child {
   border-left: none;
+}
+
+/* it's weird that we need to set this to the default, but… it makes shit work */
+.top-bar i {
+  vertical-align: baseline;
 }
 
 .top-bar .menu-bar .btn-bar i {
@@ -117,6 +125,7 @@
   .top-bar .menu-bar {
     max-width: 300px;
   }
+
   .top-bar .menu-bar .btn-bar:hover {
     background: #4f4f4f;
   }
