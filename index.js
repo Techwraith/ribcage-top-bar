@@ -45,12 +45,6 @@ var TopBar = Base.extend({
     if (opts.title) this.setTitle(opts.title, {show: true})
     if (opts.menu) this.setMenu(opts.menu, {show: true})
     if (opts.right) this.setRightButton(opts.right)
-
-    this.eachSubview(function (subview) {
-      subview.render();
-      subview.delegateEvents();
-    });
-
   }
 
 , getButton: function (opts) {
@@ -102,7 +96,7 @@ var TopBar = Base.extend({
 
     if (!params) params = {}
 
-    if (this.menu) this.menu.close({keepDom: false})
+    if (this.menu) this.menu.close()
 
     window.requestAnimationFrame(function (){
       this.menu = new Menu(opts)
