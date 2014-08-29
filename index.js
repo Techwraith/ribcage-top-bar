@@ -136,7 +136,7 @@ var TopBar = Base.extend({
     window.requestAnimationFrame(function (){
       this.menu.$('.active').removeClass('active')
       this.menu.eachSubview(function (view) {
-        if (view.options.route === route) view.$el.addClass('active')
+        if (view.route === route) view.$el.addClass('active')
       })
     }.bind(this))
   }
