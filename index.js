@@ -6,14 +6,7 @@ var Base = require('ribcage-view')
 
 var TopBar = Base.extend({
 
-  afterInit: function (opts) {
-    this.options = opts
-  }
-
-, events: {
-    'click .left-button-target': 'propagateLeft'
-  , 'click .right-button-target': 'propagateRight'
-  }
+  className: 'top-bar'
 
 , template: function () {
     return ''+
@@ -23,24 +16,11 @@ var TopBar = Base.extend({
       '<div class="right-button-target"></div>'
   }
 
-, propagateLeft: function (e) {
-    if(this.leftButton && e.target.classList.contains('left-button-target')) {
-      e.stopPropagation()
-      this.leftButton.$el.triggerHandler('click')
-    }
+, beforeInit: function beforeInit(opts) {
+    this.options = opts
   }
-
-, propagateRight: function (e) {
-    if(this.rightButton && e.target.classList.contains('right-button-target')) {
-      e.stopPropagation()
-      this.rightButton.$el.triggerHandler('click')
-    }
-  }
-
-, className: 'top-bar'
 
 , afterRender: function () {
-
     var opts = this.options
 
     if (opts.left) this.setLeftButton(opts.left)
@@ -49,8 +29,27 @@ var TopBar = Base.extend({
     if (opts.right) this.setRightButton(opts.right)
   }
 
-, getButton: function (opts) {
+, setLeftButton: function (btn) {
+    var $holder = this.$('.left-button-target')
+      , viewName = 'leftButton'
 
+    this.setButton(btn, viewName, $holder)
+  }
+
+, setRightButton: function (btn) {
+    var $holder = this.$('.right-button-target')
+      , viewName = 'rightButton'
+
+    this.setButton(btn, viewName, $holder)
+  }
+
+, setButton: function setButton(btn, viewName, $holder){
+    if (!btn && this[viewName]) this[viewName].close()
+    else if (this[viewName]) this[viewName].close(null, _.bind(this.appendButton, this, $holder, btn, viewName))
+    else if (btn) this.appendButton($holder, btn, viewName)
+  }
+
+, createButton: function createButton(opts) {
     if (opts){
       // someone may have passed in an already built button
       // if so, just append it now
@@ -64,45 +63,29 @@ var TopBar = Base.extend({
         })
       }
     }
-
-    return new Button(opts)
+    else return new Button(opts)
   }
 
-, setLeftButton: function (btn) {
-    var holder = this.$('.left-button-target')
-      , store = 'leftButton'
-
-    if (this.leftButton) this.leftButton.close(null, _.bind(this.addButton, this, holder, btn, store))
-    else this.addButton(holder, btn, store)
-  }
-
-, setRightButton: function (btn) {
-    var holder = this.$('.right-button-target')
-      , store = 'rightButton'
-
-    if (this.rightButton) this.rightButton.close(null, _.bind(this.addButton, this, holder, btn, store))
-    else this.addButton(holder, btn, store)
-  }
-
-, addButton: function addButton(holder, btn, store){
-    holder.empty()
-    this[store] = this.getButton(btn)
-    this[store].$el.addClass('right')
-    this.appendSubview(this[store], holder)
+, appendButton: function appendButton($holder, btn, viewName){
+    this[viewName] = this.createButton(btn)
+    this.appendSubview(this[viewName], $holder)
   }
 
 , setMenu: function (opts, params) {
 
     if (!params) params = {}
 
-    if (this.menu) this.menu.close()
+    if (this.menu) this.menu.close(null, _.bind(this.addNewMenu, this, opts, params))
+    else this.addNewMenu(opts, params)
+  }
 
-    window.requestAnimationFrame(function (){
-      this.menu = new Menu(opts)
+, addNewMenu: function addNewMenu(opts, params){
+    this.menu = new Menu(opts)
+    window.requestAnimationFrame(_.bind(function (){
       this.appendSubview(this.menu, this.$('.menu-target'))
 
       if (params.show) this.showMenu()
-    }.bind(this))
+    }, this))
   }
 
 , hideMenu: function () {
@@ -116,7 +99,7 @@ var TopBar = Base.extend({
 , setTitle: function (title, params) {
     if (!params) params = {}
 
-    if(typeof title == 'string')
+    if(typeof title === 'string')
       this.$('.top-bar-title').html(title)
     else
       this.appendSubview(title, this.$('.top-bar-title'));
