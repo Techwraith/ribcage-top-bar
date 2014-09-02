@@ -47,6 +47,7 @@ var TopBar = Base.extend({
     if (!btn && this[viewName]) this[viewName].close()
     else if (this[viewName]) this[viewName].close(null, _.bind(this.appendButton, this, $holder, btn, viewName))
     else if (btn) this.appendButton($holder, btn, viewName)
+    // if no btn, do nothing
   }
 
 , createButton: function createButton(opts) {
@@ -68,7 +69,9 @@ var TopBar = Base.extend({
 
 , appendButton: function appendButton($holder, btn, viewName){
     this[viewName] = this.createButton(btn)
-    this.appendSubview(this[viewName], $holder)
+    // It's werid that we need the .html because the holder should be emptied by
+    // the close method… but we do… so… I don't think this causes a memory leak?
+    $holder.html(this._attachSubView(this[viewName]).el)
   }
 
 , setMenu: function (opts, params) {
