@@ -29,11 +29,8 @@
   "readmeFilename": "README.md",
   "dependencies": {
     "lodash": "^3.6.0",
-    "ribcage-back-button": "0.0.2",
     "ribcage-button": "^1.1.2",
     "ribcage-menu": "^0.2.1",
     "ribcage-view": "^3.0.2"
-  },
-  "_id": "ribcage-top-bar@0.0.3",
-  "_from": "ribcage-top-bar@latest"
+  }
 }
